@@ -8,17 +8,17 @@ import https from 'https';
 import dotenv from 'dotenv';
 
 // Uncomment this packages to tested on local server
-import { devtools } from 'frog/dev';
-import { serveStatic } from 'frog/serve-static';
-
+// import { devtools } from 'frog/dev';
+// import { serveStatic } from 'frog/serve-static';
 
 // Load environment variables from .env file
 dotenv.config();
 
-// Browser Location
-const CAST_INTENS = 
-  "https://warpcast.com/~/compose?text=&embeds[]=https://talent-passport.vercel.app/api/frame";
+const baseUrl = "https://warpcast.com/~/compose";
+const text = "Check your Talent Passport 🪪\nFrame by @0x94t3z.eth";
+const embedUrl = "https://www.talent-passport.xyz/api/frame";
 
+const CAST_INTENS = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrl)}`;
 
 // Base URL
 const baseUrlTalentProtocol = process.env.BASE_URL_TALENT_PROTOCOL;
@@ -310,11 +310,14 @@ app.image('/initial-image', (c) => {
 })
 
 
-// Initial frame
 app.frame('/my-passport', (c) => {
   const { fid, verifiedAddresses } = c.var.interactor || {}
 
   const eth_address = verifiedAddresses?.ethAddresses[0] || [];
+
+  const embedUrlByUser = `${embedUrl}/results/${fid}/${eth_address}`;
+
+  const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
   try {
 
@@ -323,7 +326,34 @@ app.frame('/my-passport', (c) => {
       image: `/passport-image/${fid}/${eth_address}`,
       intents: [
         <Button action={`/result/${fid}/${eth_address}`}>My Passport</Button>,
-        <Button.Link href='https://passport.talentprotocol.com/signin'>Register</Button.Link>,
+        <Button.Link href={SHARE_BY_USER}>Share</Button.Link>,
+      ]
+    })
+  } catch (error) {
+    return c.error(
+      {
+        message: 'You need to register first 🫡',
+      }
+    )
+  }
+})
+
+
+app.frame('/results/:fid/:eth_address', (c) => {
+  const { fid, eth_address } = c.req.param();
+
+  const embedUrlByUser = `${embedUrl}/results/${fid}/${eth_address}`;
+
+  const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
+
+  try {
+
+    return c.res({
+      title: 'Talent Passport',
+      image: `/passport-image/${fid}/${eth_address}`,
+      intents: [
+        <Button action='/my-passport'>My Passport</Button>,
+        <Button.Link href={SHARE_BY_USER}>Share</Button.Link>,
       ]
     })
   } catch (error) {
@@ -645,7 +675,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
 
 
 // Uncomment this line code to tested on local server
-devtools(app, { serveStatic });
+// devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
