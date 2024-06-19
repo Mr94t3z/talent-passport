@@ -339,7 +339,7 @@ app.frame('/my-passport', (c) => {
 })
 
 
-app.frame('/results/:fid/:eth_address', (c) => {
+app.frame('/result/:fid/:eth_address', (c) => {
   const { fid, eth_address } = c.req.param();
 
   const embedUrlByUser = `${embedUrl}/results/${fid}/${eth_address}`;
