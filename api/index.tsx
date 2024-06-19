@@ -552,7 +552,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   )}
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    CONNECTIONS
+                    NOMINATIONS
                   </Text>
                 </Column>
               </Box>
