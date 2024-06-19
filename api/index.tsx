@@ -127,7 +127,7 @@ app.image('/initial-image', (c) => {
 
           </Box>
 
-          <Spacer size="42" />
+          <Spacer size="52" />
 
           <Box 
             alignHorizontal="center" 
@@ -528,7 +528,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
 
           </Box>
 
-          <Spacer size="32" />
+          <Spacer size="52" />
 
           <Box 
             alignHorizontal="center" 
