@@ -132,7 +132,7 @@ app.image('/initial-image', (c) => {
                 src="https://avatars.githubusercontent.com/u/52822242?v=4"
                 style={{
                   borderRadius: "0%",
-                  border: "2px solid #FFFFFF",
+                  border: "2px solid #7559EC",
                 }}
               />
 
@@ -515,7 +515,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                 src={imageSrc}
                 style={{
                   borderRadius: "0%",
-                  border: "2px solid #FFFFFF",
+                  border: "2px solid #7559EC",
                   objectFit: "cover",
                 }}
               />
