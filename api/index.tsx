@@ -310,7 +310,7 @@ app.image('/initial-image', (c) => {
 })
 
 
-app.frame('/my-passport', (c) => {
+app.frame('/my-passport', async (c) => {
   const { fid, verifiedAddresses } = c.var.interactor || {}
 
   const eth_address = verifiedAddresses?.ethAddresses[0] || [];
@@ -320,6 +320,25 @@ app.frame('/my-passport', (c) => {
   const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
   try {
+    
+    const agent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+  
+    // Fetch API by Connect Wallet Address using Axios
+    const response = await axios.get(`${baseUrlTalentProtocol}/${eth_address}`, {
+      headers: {
+        'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
+      },
+      httpsAgent: agent
+    });
+  
+    // Check if the response status is not 200 (success)
+    if (response.status !== 200 || response.data.error) {
+      return c.error({
+        message: 'You need to register first 🫡',
+      });
+    }
 
     return c.res({
       title: 'Talent Passport',
@@ -339,7 +358,7 @@ app.frame('/my-passport', (c) => {
 })
 
 
-app.frame('/result/:fid/:eth_address', (c) => {
+app.frame('/result/:fid/:eth_address', async (c) => {
   const { fid, eth_address } = c.req.param();
 
   const embedUrlByUser = `${embedUrl}/results/${fid}/${eth_address}`;
@@ -347,6 +366,25 @@ app.frame('/result/:fid/:eth_address', (c) => {
   const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
   try {
+
+    const agent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+  
+    // Fetch API by Connect Wallet Address using Axios
+    const response = await axios.get(`${baseUrlTalentProtocol}/${eth_address}`, {
+      headers: {
+        'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
+      },
+      httpsAgent: agent
+    });
+  
+    // Check if the response status is not 200 (success)
+    if (response.status !== 200 || response.data.error) {
+      return c.error({
+        message: 'You need to register first 🫡',
+      });
+    }
 
     return c.res({
       title: 'Talent Passport',
