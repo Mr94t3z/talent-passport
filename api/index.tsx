@@ -157,11 +157,11 @@ app.image('/initial-image', (c) => {
                   paddingBottom="10"
                 >
                   <Text color="white" align="center" size="32">
-                    87
+                    111
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    CONNECTIONS
+                    NOMINATIONS
                   </Text>
                 </Column>
               </Box>
@@ -421,7 +421,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
   
   // Extract relevant information from the response
   const data = response.data;
-  const connections_score = data.passport.connections_score || 0;
+  const nominations_received_count = data.passport.nominations_received_count || 0;
   const credentials_score = data.passport.credentials_score || 0;
   const credibility_score = data.passport.credibility_score || 0;
   const passport_id = data.passport.passport_id || 0;
@@ -541,13 +541,13 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   paddingTop="10" 
                   paddingBottom="10"
                 >
-                  {connections_score <= 0 ? (
+                  {nominations_received_count <= 0 ? (
                   <Text color="white" align="center" size="32">
                     0
                   </Text>  
                   ) : (
                   <Text color="white" align="center" size="32">
-                    {connections_score}
+                    {nominations_received_count}
                   </Text>
                   )}
                   <Spacer size="10" />
