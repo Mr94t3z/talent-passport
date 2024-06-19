@@ -157,26 +157,6 @@ app.image('/initial-image', (c) => {
                   paddingBottom="10"
                 >
                   <Text color="white" align="center" size="32">
-                    111
-                  </Text>
-                  <Spacer size="10" />
-                  <Text color="linearBlur" align="center" size="14">
-                    NOMINATIONS
-                  </Text>
-                </Column>
-              </Box>
-
-            <Divider direction="vertical" color="linearBlur" />
-            
-              <Box flex="1">
-                <Column 
-                  flexDirection="column" 
-                  paddingLeft="10" 
-                  paddingRight="10" 
-                  paddingTop="10" 
-                  paddingBottom="10"
-                >
-                  <Text color="white" align="center" size="32">
                     95
                   </Text>
                   <Spacer size="10" />
@@ -202,6 +182,26 @@ app.image('/initial-image', (c) => {
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
                     CREDIBILITY
+                  </Text>
+                </Column>
+              </Box>
+
+            <Divider direction="vertical" color="linearBlur" />
+
+              <Box flex="1">
+                <Column 
+                  flexDirection="column" 
+                  paddingLeft="10" 
+                  paddingRight="10" 
+                  paddingTop="10" 
+                  paddingBottom="10"
+                >
+                  <Text color="white" align="center" size="32">
+                    98
+                  </Text>
+                  <Spacer size="10" />
+                  <Text color="linearBlur" align="center" size="14">
+                    NOMINATIONS
                   </Text>
                 </Column>
               </Box>
@@ -421,9 +421,9 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
   
   // Extract relevant information from the response
   const data = response.data;
-  const nominations_received_count = data.passport.nominations_received_count || 0;
   const credentials_score = data.passport.credentials_score || 0;
   const credibility_score = data.passport.credibility_score || 0;
+  const nominations_received_count = data.passport.nominations_received_count || 0;
   const passport_id = data.passport.passport_id || 0;
   const username = data.passport.passport_profile.name || 'Unknown';
   const image_url = data.passport.passport_profile.image_url || '';
@@ -541,32 +541,6 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   paddingTop="10" 
                   paddingBottom="10"
                 >
-                  {nominations_received_count <= 0 ? (
-                  <Text color="white" align="center" size="32">
-                    0
-                  </Text>  
-                  ) : (
-                  <Text color="white" align="center" size="32">
-                    {nominations_received_count}
-                  </Text>
-                  )}
-                  <Spacer size="10" />
-                  <Text color="linearBlur" align="center" size="14">
-                    NOMINATIONS
-                  </Text>
-                </Column>
-              </Box>
-
-            <Divider direction="vertical" color="linearBlur" />
-            
-              <Box flex="1">
-                <Column 
-                  flexDirection="column" 
-                  paddingLeft="10" 
-                  paddingRight="10" 
-                  paddingTop="10" 
-                  paddingBottom="10"
-                >
                   {credentials_score <= 0 ? (
                   <Text color="white" align="center" size="32">
                     0
@@ -605,6 +579,32 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
                     CREDIBILITY
+                  </Text>
+                </Column>
+              </Box>
+
+            <Divider direction="vertical" color="linearBlur" />
+
+              <Box flex="1">
+                <Column 
+                  flexDirection="column" 
+                  paddingLeft="10" 
+                  paddingRight="10" 
+                  paddingTop="10" 
+                  paddingBottom="10"
+                >
+                  {nominations_received_count <= 0 ? (
+                  <Text color="white" align="center" size="32">
+                    0
+                  </Text>  
+                  ) : (
+                  <Text color="white" align="center" size="32">
+                    {nominations_received_count}
+                  </Text>
+                  )}
+                  <Spacer size="10" />
+                  <Text color="linearBlur" align="center" size="14">
+                    NOMINATIONS
                   </Text>
                 </Column>
               </Box>
