@@ -127,7 +127,7 @@ app.image('/initial-image', (c) => {
 
           </Box>
 
-          <Spacer size="32" />
+          <Spacer size="42" />
 
           <Box 
             alignHorizontal="center" 
