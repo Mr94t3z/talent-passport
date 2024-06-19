@@ -513,6 +513,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                 height="300"
                 width="300"
                 src={imageSrc}
+                objectFit="cover"
                 style={{
                   borderRadius: "0%",
                   border: "2px solid #FFFFFF",
