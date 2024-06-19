@@ -447,7 +447,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
   // Extract relevant information from the response
   const data = response.data;
   const username = data.passport.passport_profile.name || 'Unknown';
-  const builder_score = data.data.passport.score || 0;
+  const builder_score = data.passport.score || 0;
   const credentials_score = data.passport.credentials_score || 0;
   const credibility_score = data.passport.credibility_score || 0;
   const nominations_received_count = data.passport.nominations_received_count || 0;
