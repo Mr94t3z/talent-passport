@@ -237,13 +237,13 @@ app.image('/initial-image', (c) => {
                   alignVertical="center"
                 >
                   <Image
-                    width="42"
-                    height="42"
+                    width="44"
+                    height="44"
                     objectFit="cover"
                     src="https://talentprotocol.com/images/talent-logo.svg"
                   />
 
-                  <Spacer size="6" />
+                  <Spacer size="8" />
                   
                   <Text color="linearBlur" align="center" size="14">
                     Passport ID
@@ -640,13 +640,13 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   alignVertical="center"
                 >
                   <Image
-                    width="42"
-                    height="42"
+                    width="44"
+                    height="44"
                     objectFit="cover"
                     src="https://talentprotocol.com/images/talent-logo.svg"
                   />
 
-                  <Spacer size="6" />
+                  <Spacer size="8" />
                   
                   <Text color="linearBlur" align="center" size="14">
                     Passport ID
