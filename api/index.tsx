@@ -315,7 +315,7 @@ app.frame('/my-passport', async (c) => {
 
   const eth_address = verifiedAddresses?.ethAddresses[0] || [];
 
-  const embedUrlByUser = `${embedUrl}/results/${fid}/${eth_address}`;
+  const embedUrlByUser = `${embedUrl}/result/${fid}/${eth_address}`;
 
   const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
@@ -361,7 +361,7 @@ app.frame('/my-passport', async (c) => {
 app.frame('/result/:fid/:eth_address', async (c) => {
   const { fid, eth_address } = c.req.param();
 
-  const embedUrlByUser = `${embedUrl}/results/${fid}/${eth_address}`;
+  const embedUrlByUser = `${embedUrl}/result/${fid}/${eth_address}`;
 
   const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
