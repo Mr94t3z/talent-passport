@@ -1,7 +1,15 @@
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 import { neynar } from 'frog/middlewares'
-import { Box, Image, Column, Divider, Text, Spacer, vars } from "../lib/ui.js";
+import { 
+  Box, 
+  Image, 
+  Column, 
+  Divider, 
+  Text, 
+  Spacer, 
+  vars 
+} from "../lib/ui.js";
 import axios from 'axios';
 import sharp from 'sharp';
 import https from 'https';
@@ -124,9 +132,26 @@ app.image('/initial-image', (c) => {
           <Box 
             alignHorizontal="center" 
             alignVertical="center"
+            position="relative"
           > 
 
-            <img
+              <text 
+                color="white" 
+                align="center" 
+                style={{ 
+                  fontSize: "500px",
+                  position: "absolute", 
+                  paddingTop: "25px",
+                  color: "rgba(255, 255, 255, 0.1)",
+                  top: "50%", 
+                  left: "50%", 
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                94
+              </text>
+            
+              <img
                 height="300"
                 width="300"
                 src="https://avatars.githubusercontent.com/u/52822242?v=4"
@@ -157,7 +182,7 @@ app.image('/initial-image', (c) => {
                   paddingBottom="10"
                 >
                   <Text color="white" align="center" size="32">
-                    95
+                    87
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
@@ -177,7 +202,7 @@ app.image('/initial-image', (c) => {
                   paddingBottom="10"
                 >
                   <Text color="white" align="center" size="32">
-                    92
+                    95
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
@@ -197,7 +222,7 @@ app.image('/initial-image', (c) => {
                   paddingBottom="10"
                 >
                   <Text color="white" align="center" size="32">
-                    98
+                    92
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
@@ -421,11 +446,12 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
   
   // Extract relevant information from the response
   const data = response.data;
+  const username = data.passport.passport_profile.name || 'Unknown';
+  const builder_score = data.data.passport.score || 0;
   const credentials_score = data.passport.credentials_score || 0;
   const credibility_score = data.passport.credibility_score || 0;
   const nominations_received_count = data.passport.nominations_received_count || 0;
   const passport_id = data.passport.passport_id || 0;
-  const username = data.passport.passport_profile.name || 'Unknown';
   const image_url = data.passport.passport_profile.image_url || '';
 
 
@@ -507,16 +533,32 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
           <Box 
             alignHorizontal="center" 
             alignVertical="center"
+            position="relative"
           > 
 
-            <img
+              <text 
+                color="white" 
+                align="center" 
+                style={{ 
+                  fontSize: "500px",
+                  position: "absolute", 
+                  paddingTop: "25px",
+                  color: "rgba(255, 255, 255, 0.1)",
+                  top: "50%", 
+                  left: "50%", 
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                {builder_score}
+              </text>
+            
+              <img
                 height="300"
                 width="300"
                 src={imageSrc}
                 style={{
                   borderRadius: "0%",
                   border: "2px solid #7559EC",
-                  objectFit: "cover",
                 }}
               />
 
