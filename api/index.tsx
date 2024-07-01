@@ -114,7 +114,7 @@ app.image('/initial-image', (c) => {
                   width="18"
                   height="18"
                   objectFit="cover"
-                  src="https://talentprotocol.com/images/farcaster_logo.svg"
+                  src="https://talentprotocol.com/images/farcasterid.svg"
                 />
 
             </Box>
@@ -306,7 +306,7 @@ app.image('/initial-image', (c) => {
                     width="48"
                     height="48"
                     objectFit="cover"
-                    src="https://talentprotocol.com/images/farcaster_logo.svg"
+                    src="https://talentprotocol.com/images/farcasterid.svg"
                   />
 
                   <Spacer size="4" />
@@ -515,7 +515,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   width="18"
                   height="18"
                   objectFit="cover"
-                  src="https://talentprotocol.com/images/farcaster_logo.svg"
+                  src="https://talentprotocol.com/images/farcasterid.svg"
                 />
 
             </Box>
@@ -726,7 +726,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                     width="48"
                     height="48"
                     objectFit="cover"
-                    src="https://talentprotocol.com/images/farcaster_logo.svg"
+                    src="https://talentprotocol.com/images/farcasterid.svg"
                   />
 
                   <Spacer size="4" />
