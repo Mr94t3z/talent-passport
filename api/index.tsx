@@ -537,7 +537,9 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
           >
 
             {builder_score >= 100 ? (
-              <><text
+              <>
+              
+              <text
                 color="white"
                 align="center"
                 style={{
@@ -551,16 +553,25 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                 }}
               >
                 {builder_score}
-              </text><img
+              </text>
+              
+              <img
                   height="240"
                   width="240"
                   src={imageSrc}
                   style={{
                     borderRadius: "0%",
                     border: "2px solid #7559EC",
-                  }} /></>
+                  }} 
+                />
+                  
+                </>
+
               ) : (
-                <><text
+
+                <>
+                
+                <text
                   color="white"
                   align="center"
                   style={{
@@ -574,14 +585,19 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   }}
                 >
                   {builder_score}
-                </text><img
+                </text>
+                
+                <img
                     height="300"
                     width="300"
                     src={imageSrc}
                     style={{
                       borderRadius: "0%",
                       border: "2px solid #7559EC",
-                    }} /></>
+                    }} 
+                  />
+                    
+                </>
               )}
 
           </Box>
