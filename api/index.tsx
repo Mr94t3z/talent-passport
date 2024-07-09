@@ -534,33 +534,55 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
             alignHorizontal="center" 
             alignVertical="center"
             position="relative"
-          > 
+          >
 
-              <text 
-                color="white" 
-                align="center" 
-                style={{ 
-                  fontSize: "500px",
-                  position: "absolute", 
+            {builder_score >= 100 ? (
+              <><text
+                color="white"
+                align="center"
+                style={{
+                  fontSize: "380px",
+                  position: "absolute",
                   paddingTop: "25px",
                   color: "rgba(255, 255, 255, 0.1)",
-                  top: "50%", 
-                  left: "50%", 
+                  top: "50%",
+                  left: "50%",
                   transform: "translate(-50%, -50%)",
                 }}
               >
                 {builder_score}
-              </text>
-            
-              <img
-                height="300"
-                width="300"
-                src={imageSrc}
-                style={{
-                  borderRadius: "0%",
-                  border: "2px solid #7559EC",
-                }}
-              />
+              </text><img
+                  height="240"
+                  width="240"
+                  src={imageSrc}
+                  style={{
+                    borderRadius: "0%",
+                    border: "2px solid #7559EC",
+                  }} /></>
+              ) : (
+                <><text
+                  color="white"
+                  align="center"
+                  style={{
+                    fontSize: "500px",
+                    position: "absolute",
+                    paddingTop: "25px",
+                    color: "rgba(255, 255, 255, 0.1)",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  {builder_score}
+                </text><img
+                    height="300"
+                    width="300"
+                    src={imageSrc}
+                    style={{
+                      borderRadius: "0%",
+                      border: "2px solid #7559EC",
+                    }} /></>
+              )}
 
           </Box>
 
