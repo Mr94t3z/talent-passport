@@ -37,6 +37,7 @@ export const app = new Frog({
   assetsPath: '/',
   basePath: '/api/frame',
   ui: { vars },
+  title: 'Talent Passport',
   imageAspectRatio: '1:1',
   headers: {
     'cache-control': 'no-store, no-cache, must-revalidate, proxy-revalidate max-age=0, s-maxage=0',
@@ -46,6 +47,14 @@ export const app = new Frog({
     width: 1024,
   },
   browserLocation: CAST_INTENS,
+  hub: {
+    apiUrl: "https://hubs.airstack.xyz",
+    fetchOptions: {
+      headers: {
+        "x-airstack-hubs": process.env.AIRSTACK_API_KEY || '',
+      }
+    }
+  },
 }).use(
   neynar({
     apiKey: process.env.NEYNAR_API_KEY || '',
@@ -56,7 +65,6 @@ export const app = new Frog({
 // Initial frame
 app.frame('/', (c) => {
   return c.res({
-    title: 'Talent Passport',
     image: '/initial-image',
     intents: [
       <Button action='/my-passport'>My Passport</Button>,
