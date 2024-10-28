@@ -1,6 +1,5 @@
-import { Button, Frog } from 'frog'
-import { handle } from 'frog/vercel'
-import { neynar } from 'frog/middlewares'
+import { Button, Frog } from 'frog';
+import { handle } from 'frog/vercel';
 import { 
   Box, 
   Image, 
@@ -16,8 +15,9 @@ import https from 'https';
 import dotenv from 'dotenv';
 
 // Uncomment this packages to tested on local server
-import { devtools } from 'frog/dev';
-import { serveStatic } from 'frog/serve-static';
+// import { devtools } from 'frog/dev';
+// import { serveStatic } from 'frog/serve-static';
+import { farcasterDataFrogMiddleware } from "@airstack/frames";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -31,6 +31,34 @@ const CAST_INTENS = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${enco
 // Base URL
 const baseUrlTalentProtocol = process.env.BASE_URL_TALENT_PROTOCOL;
 
+interface UserDetails {
+  profileName?: string | null;
+  fnames?: (string | null)[] | null;
+  userAssociatedAddresses?: string[] | null;
+  followerCount?: number | null;
+  followingCount?: number | null;
+  profileImage?: {
+    extraSmall?: string;
+    small?: string;
+    medium?: string;
+    large?: string;
+    original?: string;
+  } | null;
+  connectedAddresses?: {
+    address: string;
+    blockchain: string;
+    chainId: string;
+    timestamp: string;
+  }[];
+}
+
+const farcasterDataMiddleware = farcasterDataFrogMiddleware({
+  apiKey: process.env.AIRSTACK_API_KEY || '',
+  features: {
+    userDetails: {},
+  },
+  env: "dev",
+});
 
 // Initialize Frog App
 export const app = new Frog({
@@ -55,12 +83,7 @@ export const app = new Frog({
       }
     }
   },
-}).use(
-  neynar({
-    apiKey: process.env.NEYNAR_API_KEY || '',
-    features: ['interactor', 'cast'],
-  }),
-)
+})
 
 // Initial frame
 app.frame('/', (c) => {
@@ -194,7 +217,7 @@ app.image('/initial-image', (c) => {
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    CREDENTIALS
+                    ACTIVITY
                   </Text>
                 </Column>
               </Box>
@@ -214,7 +237,7 @@ app.image('/initial-image', (c) => {
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    CREDIBILITY
+                    IDENTITY
                   </Text>
                 </Column>
               </Box>
@@ -234,7 +257,7 @@ app.image('/initial-image', (c) => {
                   </Text>
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    NOMINATIONS
+                    SKILLS
                   </Text>
                 </Column>
               </Box>
@@ -343,18 +366,17 @@ app.image('/initial-image', (c) => {
 })
 
 
-app.frame('/my-passport', async (c) => {
+app.frame('/my-passport', farcasterDataMiddleware, async (c) => {
 
-  // const { 
-  //   fid, 
-  //   verifiedAddresses 
-  // } = c.var.interactor || {}
+  const userDetails = c.var?.userDetails as UserDetails;
 
-  const eth_address = "0xc698865c38eC12b475AA55764d447566dd54c758";
+  const fid = c.frameData?.fid ?? null;
 
-  const fid = 397668
+  const ethAddress =
+  userDetails?.connectedAddresses?.find((addr) => addr.blockchain === 'ethereum')?.address ?? 
+  userDetails?.connectedAddresses?.[0]?.address ?? null;
 
-  const embedUrlByUser = `${embedUrl}/result/${fid}/${eth_address}`;
+  const embedUrlByUser = `${embedUrl}/result/${fid}/${ethAddress}`;
 
   const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
@@ -365,7 +387,7 @@ app.frame('/my-passport', async (c) => {
     });
   
     // Fetch API by Connect Wallet Address using Axios
-    const response = await axios.get(`${baseUrlTalentProtocol}/${eth_address}`, {
+    const response = await axios.get(`${baseUrlTalentProtocol}/${ethAddress}`, {
       headers: {
           'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
       },
@@ -379,15 +401,11 @@ app.frame('/my-passport', async (c) => {
         });
     }
 
-    const data = response.data;
-
-    console.log(data);
-
     return c.res({
       title: 'Talent Passport',
-      image: `/passport-image/${fid}/${eth_address}`,
+      image: `/passport-image/${fid}/${ethAddress}`,
       intents: [
-        <Button action={`/result/${fid}/${eth_address}`}>My Passport</Button>,
+        <Button action={`/result/${fid}/${ethAddress}`}>My Passport</Button>,
         <Button.Link href={SHARE_BY_USER}>Share</Button.Link>,
       ]
     })
@@ -402,10 +420,10 @@ app.frame('/my-passport', async (c) => {
 })
 
 
-app.frame('/result/:fid/:eth_address', async (c) => {
-  const { fid, eth_address } = c.req.param();
+app.frame('/result/:fid/:ethAddress', async (c) => {
+  const { fid, ethAddress } = c.req.param();
 
-  const embedUrlByUser = `${embedUrl}/result/${fid}/${eth_address}`;
+  const embedUrlByUser = `${embedUrl}/result/${fid}/${ethAddress}`;
 
   const SHARE_BY_USER = `${baseUrl}?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(embedUrlByUser)}`;
 
@@ -416,7 +434,7 @@ app.frame('/result/:fid/:eth_address', async (c) => {
     });
   
     // Fetch API by Connect Wallet Address using Axios
-    const response = await axios.get(`${baseUrlTalentProtocol}/${eth_address}`, {
+    const response = await axios.get(`${baseUrlTalentProtocol}/${ethAddress}`, {
       headers: {
         'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
       },
@@ -432,7 +450,7 @@ app.frame('/result/:fid/:eth_address', async (c) => {
 
     return c.res({
       title: 'Talent Passport',
-      image: `/passport-image/${fid}/${eth_address}`,
+      image: `/passport-image/${fid}/${ethAddress}`,
       intents: [
         <Button action='/my-passport'>My Passport</Button>,
         <Button.Link href={SHARE_BY_USER}>Share</Button.Link>,
@@ -448,15 +466,15 @@ app.frame('/result/:fid/:eth_address', async (c) => {
 })
 
 
-app.image('/passport-image/:fid/:eth_address', async (c) => {
-  const { fid, eth_address } = c.req.param();
+app.image('/passport-image/:fid/:ethAddress', async (c) => {
+  const { fid, ethAddress } = c.req.param();
 
   const agent = new https.Agent({
     rejectUnauthorized: false,
   });
 
   // Fetch API by Connect Wallet Address using Axios
-  const response = await axios.get(`${baseUrlTalentProtocol}/${eth_address}`, {
+  const response = await axios.get(`${baseUrlTalentProtocol}/${ethAddress}`, {
     headers: {
       'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
     },
@@ -467,9 +485,9 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
   const data = response.data;
   const username = data.passport.passport_profile.name || 'Unknown';
   const builder_score = data.passport.score || 0;
-  const credentials_score = data.passport.credentials_score || 0;
-  const credibility_score = data.passport.credibility_score || 0;
-  const nominations_received_count = data.passport.nominations_received_count || 0;
+  const activity_score = data.passport.activity_score || 0;
+  const identity_score = data.passport.identity_score || 0;
+  const skills_score = data.passport.skills_score || 0;
   const passport_id = data.passport.passport_id || 0;
   const image_url = data.passport.passport_profile.image_url || '';
 
@@ -640,18 +658,18 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   paddingTop="10" 
                   paddingBottom="10"
                 >
-                  {credentials_score <= 0 ? (
+                  {activity_score <= 0 ? (
                   <Text color="white" align="center" size="32">
                     0
                   </Text>  
                   ) : (
                   <Text color="white" align="center" size="32">
-                    {credentials_score}
+                    {activity_score}
                   </Text>
                   )}
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    CREDENTIALS
+                    ACTIVITY
                   </Text>
                 </Column>
               </Box>
@@ -666,18 +684,18 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   paddingTop="10" 
                   paddingBottom="10"
                 >
-                  {credibility_score <= 0 ? (
+                  {identity_score <= 0 ? (
                   <Text color="white" align="center" size="32">
                     0
                   </Text>  
                   ) : (
                   <Text color="white" align="center" size="32">
-                    {credibility_score}
+                    {identity_score}
                   </Text>
                   )}
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    CREDIBILITY
+                    IDENTITY
                   </Text>
                 </Column>
               </Box>
@@ -692,18 +710,18 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   paddingTop="10" 
                   paddingBottom="10"
                 >
-                  {nominations_received_count <= 0 ? (
+                  {skills_score <= 0 ? (
                   <Text color="white" align="center" size="32">
                     0
                   </Text>  
                   ) : (
                   <Text color="white" align="center" size="32">
-                    {nominations_received_count}
+                    {skills_score}
                   </Text>
                   )}
                   <Spacer size="10" />
                   <Text color="linearBlur" align="center" size="14">
-                    NOMINATIONS
+                    SKILLS
                   </Text>
                 </Column>
               </Box>
@@ -813,7 +831,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
 
 
 // Uncomment this line code to tested on local server
-devtools(app, { serveStatic });
+// devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
