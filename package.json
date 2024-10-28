@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
-    "frog": "^0.12.2",
+    "frog": "^0.17.4",
     "hono": "^4",
     "https": "^1.0.0",
     "sharp": "^0.33.4"

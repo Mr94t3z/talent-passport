@@ -16,8 +16,8 @@ import https from 'https';
 import dotenv from 'dotenv';
 
 // Uncomment this packages to tested on local server
-// import { devtools } from 'frog/dev';
-// import { serveStatic } from 'frog/serve-static';
+import { devtools } from 'frog/dev';
+import { serveStatic } from 'frog/serve-static';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -122,7 +122,7 @@ app.image('/initial-image', (c) => {
                   width="18"
                   height="18"
                   objectFit="cover"
-                  src="https://talentprotocol.com/images/farcasterid.svg"
+                  src="https://talentprotocol.com/images/farcaster.svg"
                 />
 
             </Box>
@@ -270,10 +270,10 @@ app.image('/initial-image', (c) => {
                   alignVertical="center"
                 >
                   <Image
-                    width="44"
-                    height="44"
-                    objectFit="cover"
-                    src="https://talentprotocol.com/images/talent-logo.svg"
+                    width="40"
+                    height="40"
+                    objectFit="contain"
+                    src="/logomark_dark.png"
                   />
 
                   <Spacer size="8" />
@@ -314,7 +314,7 @@ app.image('/initial-image', (c) => {
                     width="48"
                     height="48"
                     objectFit="cover"
-                    src="https://talentprotocol.com/images/farcasterid.svg"
+                    src="https://talentprotocol.com/images/farcaster.svg"
                   />
 
                   <Spacer size="4" />
@@ -344,9 +344,15 @@ app.image('/initial-image', (c) => {
 
 
 app.frame('/my-passport', async (c) => {
-  const { fid, verifiedAddresses } = c.var.interactor || {}
 
-  const eth_address = verifiedAddresses?.ethAddresses[0] || [];
+  // const { 
+  //   fid, 
+  //   verifiedAddresses 
+  // } = c.var.interactor || {}
+
+  const eth_address = "0xc698865c38eC12b475AA55764d447566dd54c758";
+
+  const fid = 397668
 
   const embedUrlByUser = `${embedUrl}/result/${fid}/${eth_address}`;
 
@@ -361,17 +367,21 @@ app.frame('/my-passport', async (c) => {
     // Fetch API by Connect Wallet Address using Axios
     const response = await axios.get(`${baseUrlTalentProtocol}/${eth_address}`, {
       headers: {
-        'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
+          'X-API-KEY': process.env.TALENT_PROTOCOL_API_KEY || '',
       },
-      httpsAgent: agent
+      httpsAgent: agent,
     });
-  
-    // Check if the response status is not 200 (success)
+
+    // Check if the response status is not 200 (success) or if there’s an error in the response data
     if (response.status !== 200 || response.data.error) {
-      return c.error({
-        message: 'You need to register first 🫡',
-      });
+        return c.error({
+            message: 'You need to register first 🫡',
+        });
     }
+
+    const data = response.data;
+
+    console.log(data);
 
     return c.res({
       title: 'Talent Passport',
@@ -382,6 +392,7 @@ app.frame('/my-passport', async (c) => {
       ]
     })
   } catch (error) {
+    console.error('Error fetching passport data:', error);
     return c.error(
       {
         message: 'You need to register first 🫡',
@@ -523,7 +534,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   width="18"
                   height="18"
                   objectFit="cover"
-                  src="https://talentprotocol.com/images/farcasterid.svg"
+                  src="https://talentprotocol.com/images/farcaster.svg"
                 />
 
             </Box>
@@ -728,10 +739,10 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                   alignVertical="center"
                 >
                   <Image
-                    width="44"
-                    height="44"
-                    objectFit="cover"
-                    src="https://talentprotocol.com/images/talent-logo.svg"
+                    width="40"
+                    height="40"
+                    objectFit="contain"
+                    src="/logomark_dark.png"
                   />
 
                   <Spacer size="8" />
@@ -772,7 +783,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
                     width="48"
                     height="48"
                     objectFit="cover"
-                    src="https://talentprotocol.com/images/farcasterid.svg"
+                    src="https://talentprotocol.com/images/farcaster.svg"
                   />
 
                   <Spacer size="4" />
@@ -802,7 +813,7 @@ app.image('/passport-image/:fid/:eth_address', async (c) => {
 
 
 // Uncomment this line code to tested on local server
-// devtools(app, { serveStatic });
+devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
