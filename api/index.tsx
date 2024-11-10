@@ -105,7 +105,7 @@ app.image('/initial-image', (c) => {
     image: (
       <Box
           alignVertical="center"
-          backgroundImage="url(https://raw.githubusercontent.com/Mr94t3z/talent-passport/refs/heads/master/public/union.svg)"
+          backgroundImage="url(https://raw.githubusercontent.com/Mr94t3z/talent-passport/refs/heads/master/public/union.png)"
           backgroundColor="bg"
           justifyContent="center"
           paddingTop="52"
