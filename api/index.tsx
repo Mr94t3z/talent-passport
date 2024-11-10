@@ -15,8 +15,8 @@ import https from 'https';
 import dotenv from 'dotenv';
 
 // Uncomment this packages to tested on local server
-import { devtools } from 'frog/dev';
-import { serveStatic } from 'frog/serve-static';
+// import { devtools } from 'frog/dev';
+// import { serveStatic } from 'frog/serve-static';
 import { farcasterDataFrogMiddleware } from "@airstack/frames";
 
 // Load environment variables from .env file
@@ -831,7 +831,7 @@ app.image('/passport-image/:fid/:ethAddress', async (c) => {
 
 
 // Uncomment this line code to tested on local server
-devtools(app, { serveStatic });
+// devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
