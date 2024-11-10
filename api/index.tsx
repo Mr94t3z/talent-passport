@@ -111,7 +111,7 @@ app.image('/initial-image', (c) => {
           paddingTop="52"
           paddingLeft="80"
           paddingRight="80"
-          backgroundSize="120% 150%"
+          backgroundSize="120% 130%"
           backgroundPosition="top -10%"
       >
           
@@ -512,13 +512,13 @@ app.image('/passport-image/:fid/:ethAddress', async (c) => {
     image: (
       <Box
           alignVertical="center"
-          backgroundImage="url(https://talentprotocol.com/images/gradient-home-page-background.png)"
+          backgroundImage="url(https://raw.githubusercontent.com/Mr94t3z/talent-passport/refs/heads/master/public/union.png)"
           backgroundColor="bg"
           justifyContent="center"
           paddingTop="52"
           paddingLeft="80"
           paddingRight="80"
-          backgroundSize="120% 150%"
+          backgroundSize="120% 130%"
           backgroundPosition="top -10%"
       >
           
