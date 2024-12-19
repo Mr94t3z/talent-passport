@@ -136,16 +136,16 @@ app.image('/initial-image', (c) => {
             <Box
               backgroundColor="purple"
               borderRadius="8"
-              padding="2"
+              padding="4"
               height="22"
               width="22"
             >
 
               <Image
-                  width="18"
-                  height="18"
+                  width="14"
+                  height="14"
                   objectFit="cover"
-                  src="https://talentprotocol.com/images/farcaster.svg"
+                  src="https://i.ibb.co.com/p4Y1bzb/fc.png"
                 />
 
             </Box>
@@ -334,10 +334,10 @@ app.image('/initial-image', (c) => {
                   alignVertical="center"
                 >
                   <Image
-                    width="48"
-                    height="48"
+                    width="42"
+                    height="42"
                     objectFit="cover"
-                    src="https://talentprotocol.com/images/farcaster.svg"
+                    src="https://i.ibb.co.com/p4Y1bzb/fc.png"
                   />
 
                   <Spacer size="4" />
@@ -543,16 +543,16 @@ app.image('/passport-image/:fid/:ethAddress', async (c) => {
             <Box
               backgroundColor="purple"
               borderRadius="8"
-              padding="2"
+              padding="4"
               height="22"
               width="22"
             >
 
               <Image
-                  width="18"
-                  height="18"
+                  width="14"
+                  height="14"
                   objectFit="cover"
-                  src="https://talentprotocol.com/images/farcaster.svg"
+                  src="https://i.ibb.co.com/p4Y1bzb/fc.png"
                 />
 
             </Box>
@@ -798,10 +798,10 @@ app.image('/passport-image/:fid/:ethAddress', async (c) => {
                   alignVertical="center"
                 >
                   <Image
-                    width="48"
-                    height="48"
+                    width="42"
+                    height="42"
                     objectFit="cover"
-                    src="https://talentprotocol.com/images/farcaster.svg"
+                    src="https://i.ibb.co.com/p4Y1bzb/fc.png"
                   />
 
                   <Spacer size="4" />
